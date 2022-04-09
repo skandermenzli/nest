@@ -6,6 +6,6 @@ export class updateTodoDto {
   name: string;
   @IsOptional()  
   description: string;
-  
+  @IsOptional()
   status: TodoStatusEnum;
 }

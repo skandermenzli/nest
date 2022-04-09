@@ -1,9 +1,11 @@
 import { CvEntity } from "src/cv/entities/cv.entity";
 import { TimestampEntities } from "src/Generics/timestamp.entities";
-import { Column, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
+
+@Entity('skill')
 export class SkillEntity extends TimestampEntities {
 
     @PrimaryGeneratedColumn()
@@ -12,13 +14,10 @@ export class SkillEntity extends TimestampEntities {
     @Column()
     designation:string
 
-    @ManyToMany(
-        type => CvEntity,
-        (cv) => cv.skills,
-        {
-          nullable: true,
-          cascade: true
-        }
-      )
-      cvs: CvEntity[];
+    @ManyToMany(()=>CvEntity)
+    @JoinTable()
+    cvs: CvEntity[]
+
+    
 }
+

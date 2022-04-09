@@ -17,6 +17,7 @@ import {
 import { Request, Response } from 'express';
 import { version } from 'os';
 import { AddTodoDto } from './dto/add_todo.dto';
+import { updateTodoDto } from './dto/update_todo.dto';
 import { Todo } from './entities/todo.entity';
 import { TodoStatusEnum } from './enums/todo-status.enum';
 import { TodoService } from './todo.service';
@@ -82,7 +83,7 @@ export class TodoController {
 
   @Patch(':id')
   @Version('2')
-  async updateTodosV2(@Body() newtodo: AddTodoDto,@Param('id',ParseIntPipe) id:number):Promise<Todo>{
+  async updateTodosV2(@Body() newtodo: updateTodoDto,@Param('id',ParseIntPipe) id:number):Promise<Todo>{
     return await this.todoService.updateTodoV2(newtodo,id)
   }
 
@@ -99,9 +100,13 @@ export class TodoController {
     return await this.todoService.restoretodo(id);
   }
 
-  @Get(':chaine/:statu')
+
+
+//compte rendu des pages 229,233,236,250
+
+  @Get('')
   @Version('3')
-  async getTodosV3(@Param('chaine') chaine:string,@Param('statu') statu:string){
+  async getTodosV3(@Query('chaine') chaine:string,@Query('statu') statu:string){
     return await this.todoService.gettodosV3(chaine,statu);
   }
 
@@ -113,7 +118,7 @@ export class TodoController {
   }
 
 
-  @Get('')
+  @Get('status')
   @Version('3')
   async getTodosbyStatus(@Query('deb')deb:Date,@Query('fin')fin:Date){
     return await this.todoService.grpbystatus();

@@ -44,15 +44,7 @@ export class CvEntity extends TimestampEntities {
   )
   user: UserEntity;
 
-  @ManyToMany(
-    type => SkillEntity,
-    (skill) => skill.cvs,
-    {
-      nullable: true,
-      cascade: true
-    }
-  )
-  skills: SkillEntity[];
+  
     
 
 }

@@ -123,11 +123,25 @@ export class TodoService {
   }
 
 
-  async gettodosV3(chaine:string,statu:string){
+
+
+  //compte rendu des pages 229,233,236,250
+
+  async gettodosV3(chaine:string="vide",statu:string="vide"){
     const qb = this.todoRepository.createQueryBuilder("todo")
     qb.select("*")
-    .where("todo.name like :chaine or todo.description like :chaine and todo.status = :statu")
-    .setParameters({chaine:'%'+chaine+'%',statu:'%'+statu+'%'})
+    
+    if(chaine!="vide"){
+      qb.where("todo.name like :chaine or todo.description like :chaine")
+    
+    }
+    if(statu!="vide"){
+      qb.andWhere("todo.status = :statu")
+    
+    }
+    qb.setParameters({chaine:'%'+chaine+'%',statu:statu})
+   
+    
     console.log(qb.getSql());
     return qb.getRawMany()
     
@@ -144,7 +158,7 @@ export class TodoService {
   }
 
 
-  async grpbystatus(deb:string="2022-04-05 16:50:36.000000",fin:string="2022-04-05 16:50:36.000000"
+  async grpbystatus(deb:string="2000-04-05 16:50:36.000000",fin:string="2100-04-05 16:50:36.000000"
     ){
     const qb = this.todoRepository.createQueryBuilder("todo")
     qb.select("todo.status,count(todo.id) as nbrDeTodos ")
